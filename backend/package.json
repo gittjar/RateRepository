@@ -15,5 +15,9 @@
     "https-localhost": "^4.7.1",
     "jsonwebtoken": "^9.0.2",
     "moment-timezone": "^0.5.47"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "build": "echo 'No build step needed'"
   }
 }

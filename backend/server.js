@@ -7,6 +7,7 @@ const fs = require('fs');
 const authenticateJWT = require('./middleware/authenticateJWT');
 const repositoryRoutes = require('./routes/repositories');
 const moment = require('moment-timezone');
+const secretKey = process.env.SECRET_KEY;
 
 dotenv.config();
 
@@ -108,6 +109,16 @@ app.delete('/likelist/:id', authenticateJWT, (req, res) => {
 
 // Use repository routes
 app.use('/repositories', repositoryRoutes);
+
+
+app.get('/', (req, res) => {
+  res.send(`Hello World! Secret Key: ${secretKey}`);
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
