@@ -1,5 +1,7 @@
 # RateRepository App
 
+### This is demo version
+
 RateRepository is a React Native application that allows users to login with an authenticated token, add and remove repositories from their home screen, and view repositories in different timezones. This app is built using [Expo](https://expo.dev/), which makes it easy to get started with React Native.
 
 ## Features
@@ -17,44 +19,19 @@ RateRepository is a React Native application that allows users to login with an 
 - [Node.js](https://nodejs.org/)
 - [Expo CLI](https://docs.expo.dev/get-started/installation/)
 
-### Installation
+### Deployments
 
-1. Clone the repository:
+0. Login: 
+    - user1
+    - password1
 
-    ```sh
-    git clone https://github.com/gittjar/raterepository.git
-    cd raterepository
-    ```
+1. Backend:
 
-2. Install dependencies for the frontend:
+    https://raterepository-backend.vercel.app/repositories
 
-    ```sh
-    cd frontend
-    npm install
-    ```
+2. Frontend:
 
-3. Install dependencies for the backend:
-
-    ```sh
-    cd ../backend
-    npm install
-    ```
-
-### Running the App
-
-1. Start the backend server:
-
-    ```sh
-    cd backend
-    node server.js
-    ```
-
-2. Start the Expo project:
-
-    ```sh
-    cd ../frontend
-    npx expo start
-    ```
+    https://raterepository.netlify.app
 
 ## Learn More
 

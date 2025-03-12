@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 const cors = require('cors'); 
 const fs = require('fs');
+const path = require('path');
 const authenticateJWT = require('./middleware/authenticateJWT');
 const repositoryRoutes = require('./routes/repositories');
 const moment = require('moment-timezone');
@@ -23,7 +24,8 @@ const users = [
 ];
 
 // Load repositories data
-let repositories = JSON.parse(fs.readFileSync('repositories.json', 'utf8'));
+const filePath = path.join(__dirname, 'repositories.json');
+let repositories = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 console.log('Loaded repositories:', repositories);
 
 // Local time with timezone
@@ -109,7 +111,6 @@ app.delete('/likelist/:id', authenticateJWT, (req, res) => {
 
 // Use repository routes
 app.use('/repositories', repositoryRoutes);
-
 
 app.get('/', (req, res) => {
   res.send(`Hello World! Secret Key: ${secretKey}`);
