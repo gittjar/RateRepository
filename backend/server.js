@@ -13,10 +13,13 @@ const secretKey = process.env.SECRET_KEY;
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 4000; // Default to 4000 if PORT is not set
 
 app.use(bodyParser.json());
-app.use(cors()); // Use the cors middleware
+app.use(cors({
+  origin: 'https://raterepository.netlify.app', // Your frontend URL
+  optionsSuccessStatus: 200
+}));
 
 const users = [
   { id: 1, username: 'user1', password: 'password1' },
@@ -31,15 +34,6 @@ console.log('Loaded repositories:', repositories);
 // Local time with timezone
 app.get('/time', (req, res) => {
   const { timezone } = req.query;
-  const options = { 
-    weekday: 'long', 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric', 
-    hour: '2-digit', 
-    minute: '2-digit', 
-    second: '2-digit' 
-  };
   const localTime = moment().tz(timezone).format('LLLL');
   res.json({ time: localTime });
 });
@@ -50,10 +44,10 @@ app.post('/login', (req, res) => {
   const user = users.find(u => u.username === username && u.password === password);
 
   if (user) {
-    const accessToken = jwt.sign({ username: user.username, id: user.id }, process.env.SECRET_KEY);
+    const accessToken = jwt.sign({ username: user.username, id: user.id }, secretKey);
     res.json({ accessToken });
   } else {
-    res.send('Username or password incorrect');
+    res.status(401).send('Username or password incorrect');
   }
 });
 
