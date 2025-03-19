@@ -8,6 +8,7 @@ const path = require('path');
 const authenticateJWT = require('./middleware/authenticateJWT');
 const repositoryRoutes = require('./routes/repositories');
 const moment = require('moment-timezone');
+const secretKey = process.env.SECRET_KEY;
 
 dotenv.config();
 
@@ -15,22 +16,8 @@ const app = express();
 const PORT = process.env.PORT || 4000; // Default to 4000 if PORT is not set
 
 app.use(bodyParser.json());
-
-const allowedOrigins = [
-  'https://raterepository.netlify.app',
-  'http://localhost:19006'
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
+  origin: 'https://raterepository.netlify.app', // Your frontend URL
   optionsSuccessStatus: 200
 }));
 
@@ -120,7 +107,7 @@ app.delete('/likelist/:id', authenticateJWT, (req, res) => {
 app.use('/repositories', repositoryRoutes);
 
 app.get('/', (req, res) => {
-  res.send(`Hello World! Server is running on http://localhost:${PORT}`);
+  res.send(`Hello World! Secret Key: ${secretKey}`);
 });
 
 app.use((err, req, res, next) => {
