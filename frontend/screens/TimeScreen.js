@@ -5,6 +5,7 @@ import axios from 'axios';
 import Config from '../components/Config';
 import timezones from '../components/timezone01';
 import additionalTimezones from '../components/timezone02';
+import Notification from '../components/Notification'; 
 
 const CityCard = ({ city, time, timezone, onRemove }) => (
   <View style={styles.card}>
@@ -19,6 +20,8 @@ const TimeScreen = () => {
   const [cityTimes, setCityTimes] = useState({});
   const [selectedTimezone, setSelectedTimezone] = useState('timezone01');
   const [allTimezones, setAllTimezones] = useState(timezones);
+  const [notificationMessage, setNotificationMessage] = useState('');
+  const [notificationVisible, setNotificationVisible] = useState(false);
 
   useEffect(() => {
     const fetchTimes = async () => {
@@ -48,6 +51,9 @@ const TimeScreen = () => {
         cities: tz.cities.filter((city) => city !== cityToRemove),
       }))
     );
+    const remainingCities = allTimezones.flatMap(tz => tz.cities).length - 1;
+    setNotificationMessage(`You deleted ${cityToRemove} and you have ${remainingCities} cities left!`);
+    setNotificationVisible(true);
   };
 
   const handleTimezoneChange = (value) => {
@@ -98,6 +104,11 @@ const TimeScreen = () => {
         keyExtractor={(item) => item.city}
         numColumns={numColumns}
         contentContainerStyle={styles.citiesContainer}
+      />
+      <Notification
+        message={notificationMessage}
+        visible={notificationVisible}
+        onHide={() => setNotificationVisible(false)}
       />
     </View>
   );

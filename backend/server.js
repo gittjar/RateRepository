@@ -17,7 +17,8 @@ const PORT = process.env.PORT || 4000; // Default to 4000 if PORT is not set
 
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'https://raterepository.netlify.app', // Your frontend URL
+origin: 'https://raterepository.netlify.app', // Your frontend URL
+//  origin: 'http://localhost:19006', // Your frontend URL
   optionsSuccessStatus: 200
 }));
 
